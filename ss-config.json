@@ -1,0 +1,103 @@
+{
+    "dns": {
+        "rules": [
+        ],
+        "servers": [
+            {
+                "address": "8.8.8.8",
+                "detour": "direct",
+                "tag": "dns-local"
+            }
+        ]
+    },
+    "inbounds": [
+        {
+            "auto_route": true,
+            "domain_strategy": "",
+            "endpoint_independent_nat": true,
+            "inet4_address": "172.19.0.1/28",
+            "interface_name": "nekoray-tun",
+            "mtu": 9000,
+            "sniff": true,
+            "sniff_override_destination": false,
+            "stack": "gvisor",
+            "strict_route": false,
+            "tag": "tun-in",
+            "type": "tun"
+        }
+    ],
+    "log": {
+        "level": "info"
+    },
+    "outbounds": [
+        {
+            "domain_strategy": "",
+            "server": "82.165.56.60",
+            "server_port": 8443,
+            "tag": "proxy",
+            "tls": {
+                "enabled": true,
+                "reality": {
+                    "enabled": true,
+                    "public_key": "N1HdDvKTt9Q7QP5l9rP_fwzr236SDWYMSvVeEdC1uBM",
+                    "short_id": "e637a7288fe573c5"
+                },
+                "server_name": "sp1.u-n.cz.prod.hosts.ooklaserver.net",
+                "utls": {
+                    "enabled": true,
+                    "fingerprint": "chrome"
+                }
+            },
+            "type": "vmess",
+            "uuid": "27848739-7e62-4138-9fd3-938a63964b6b"
+        },
+        {
+            "tag": "direct",
+            "type": "direct"
+        },
+        {
+            "tag": "bypass",
+            "type": "direct"
+        },
+        {
+            "tag": "block",
+            "type": "block"
+        }
+    ],
+    "route": {
+        "auto_detect_interface": true,
+        "geoip": {
+            "path": "C:/Users/madab/Desktop/nekoray/geoip.db"
+        },
+        "geosite": {
+            "path": "C:/Users/madab/Desktop/nekoray/geosite.db"
+        },
+        "rules": [
+            {
+                "network": "udp",
+                "outbound": "block",
+                "port": [
+                    135,
+                    137,
+                    138,
+                    139,
+                    5353
+                ]
+            },
+            {
+                "ip_cidr": [
+                    "224.0.0.0/3",
+                    "ff00::/8"
+                ],
+                "outbound": "block"
+            },
+            {
+                "outbound": "block",
+                "source_ip_cidr": [
+                    "224.0.0.0/3",
+                    "ff00::/8"
+                ]
+            }
+        ]
+    }
+}
